@@ -9,7 +9,7 @@ export function GlassCard({ className, children, ...props }: GlassCardProps) {
     <div
       className={cn(
         "p-6 rounded-xl shadow-xl", // Increased rounding and shadow for more pop
-        "bg-[rgba(255,255,255,0.15)] dark:bg-[rgba(50,55,70,0.25)]", // Adjusted dark bg for better glass feel
+        "bg-background/15 dark:bg-background/25", // Use themed background with opacity
         "backdrop-blur-lg", // Increased blur
         "border border-[rgba(255,255,255,0.2)] dark:border-[rgba(255,255,255,0.1)]",
         className
