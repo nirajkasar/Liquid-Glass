@@ -12,7 +12,7 @@ export function GlassCard({ className, children, ...props }: GlassCardProps) {
         "bg-[rgba(255,255,255,0.05)]", // Background now more transparent
         "rounded-[16px]", // User-provided border-radius
         "shadow-[0_4px_30px_rgba(0,0,0,0.1)]", // User-provided box-shadow
-        "backdrop-blur-[5px]", // User-provided backdrop-filter
+        "backdrop-blur-[2px]", // User-provided backdrop-filter
         "border border-[rgba(255,255,255,0.3)]", // User-provided border
         className
       )}

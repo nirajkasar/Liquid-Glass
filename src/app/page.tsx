@@ -49,25 +49,93 @@ export default function Home() {
       </div>
 
       <GlassCard className="mb-16">
-        <h2 className="text-3xl font-headline font-semibold mb-6 text-center">Visual Demo</h2>
-        <div className="grid md:grid-cols-3 gap-6">
-          <div className="aspect-video bg-primary/20 rounded-lg flex items-center justify-center p-4">
-            <p className="text-primary-foreground font-medium">Glass Element 1</p>
+        <h2 className="text-3xl font-headline font-semibold mb-6 text-center">Code Demo: Implementing the Glass Effect</h2>
+        <div className="space-y-8 text-foreground/90">
+          <div>
+            <h3 className="text-xl font-semibold mb-2">1. Using the <code className="font-code bg-muted px-1.5 py-0.5 rounded text-sm">GlassCard</code> Component</h3>
+            <p className="mb-3">
+              The simplest way to add a glass effect to a section of your page is by using the 
+              pre-built <code className="font-code bg-muted px-1.5 py-0.5 rounded text-sm">GlassCard</code> component. 
+              It encapsulates all the necessary styling. Just import it and wrap your content:
+            </p>
+            <pre className="bg-foreground/5 dark:bg-background/20 p-4 rounded-lg overflow-x-auto shadow-inner">
+              <code className="font-code text-sm leading-relaxed">
+                {`import { GlassCard } from '@/components/shared/GlassCard';
+
+export default function MyPageComponent() {
+  return (
+    <GlassCard className="p-8 my-4">
+      <h3 className="text-2xl font-semibold">Hello Glass!</h3>
+      <p className="mt-2">This content is inside a GlassCard component.</p>
+      <Button className="mt-4">A Button on Glass</Button>
+    </GlassCard>
+  );
+}`}
+              </code>
+            </pre>
           </div>
-          <div className="relative aspect-video rounded-lg overflow-hidden">
-            <Image 
-              src="https://placehold.co/600x400.png" 
-              alt="Placeholder image for demo" 
-              layout="fill" 
-              objectFit="cover"
-              data-ai-hint="abstract gradient"
-            />
-             <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
-                <p className="text-white text-xl font-bold">Image with Overlay</p>
-             </div>
+
+          <div>
+            <h3 className="text-xl font-semibold mb-2">2. Understanding the Styling</h3>
+            <p className="mb-3">
+              The <code className="font-code bg-muted px-1.5 py-0.5 rounded text-sm">GlassCard</code> component (located at 
+              <code className="font-code bg-muted px-1.5 py-0.5 rounded text-sm">src/components/shared/GlassCard.tsx</code>) 
+              uses Tailwind CSS with arbitrary values to achieve the specific glassmorphism effect you provided:
+            </p>
+            <pre className="bg-foreground/5 dark:bg-background/20 p-4 rounded-lg overflow-x-auto shadow-inner">
+              <code className="font-code text-sm leading-relaxed">
+                {`// src/components/shared/GlassCard.tsx (core styling)
+<div
+  className={cn(
+    "p-6", // Default padding
+    "bg-[rgba(255,255,255,0.05)]", // RGBA background for transparency
+    "rounded-[16px]",             // Specific border radius
+    "shadow-[0_4px_30px_rgba(0,0,0,0.1)]", // Box shadow
+    "backdrop-blur-[2px]",        // Backdrop filter for blur (reduced for clarity)
+    "border border-[rgba(255,255,255,0.3)]", // Border styling
+    className // Allows for additional custom classes
+  )}
+  {...props}
+>
+  {children}
+</div>`}
+              </code>
+            </pre>
+            <p className="mt-3">
+              You can modify these values directly in the component file if you need to tweak the appearance globally. 
+              For example, changing <code className="font-code bg-muted px-1.5 py-0.5 rounded text-sm">backdrop-blur-[2px]</code> to 
+              <code className="font-code bg-muted px-1.5 py-0.5 rounded text-sm">backdrop-blur-[5px]</code> would increase the blur effect.
+            </p>
           </div>
-          <div className="aspect-video bg-accent/20 rounded-lg flex items-center justify-center p-4">
-            <p className="text-accent-foreground font-medium">Glass Element 3</p>
+          
+          <div>
+            <h3 className="text-xl font-semibold mb-2">3. How the "Code Behind the Glass" Works</h3>
+            <p className="mb-3">
+              The illusion of code appearing behind the translucent glass elements is achieved through a combination of factors:
+            </p>
+            <ul className="list-disc list-inside space-y-2 pl-4">
+              <li>
+                <strong>Transparent Page Body:</strong> The main <code className="font-code bg-muted px-1.5 py-0.5 rounded text-sm">&lt;body&gt;</code> background is set to 
+                transparent in <code className="font-code bg-muted px-1.5 py-0.5 rounded text-sm">src/app/globals.css</code> using <code className="font-code bg-muted px-1.5 py-0.5 rounded text-sm">@apply bg-transparent;</code>.
+              </li>
+              <li>
+                <strong>Fixed Code Background:</strong> The <code className="font-code bg-muted px-1.5 py-0.5 rounded text-sm">CodeBackground</code> component 
+                (<code className="font-code bg-muted px-1.5 py-0.5 rounded text-sm">src/components/code-background/CodeBackground.tsx</code>) 
+                is positioned fixed to cover the entire viewport (<code className="font-code bg-muted px-1.5 py-0.5 rounded text-sm">fixed inset-0 z-[-1]</code>). 
+                It displays the page's own source code with a typing animation.
+              </li>
+              <li>
+                <strong>Translucent Elements:</strong> The <code className="font-code bg-muted px-1.5 py-0.5 rounded text-sm">GlassCard</code> and other UI elements designed to be "glassy" must have a semi-transparent background (like <code className="font-code bg-muted px-1.5 py-0.5 rounded text-sm">bg-[rgba(255,255,255,0.05)]</code>) to allow the <code className="font-code bg-muted px-1.5 py-0.5 rounded text-sm">CodeBackground</code> to show through.
+              </li>
+              <li>
+                <strong>Context for Code:</strong> The <code className="font-code bg-muted px-1.5 py-0.5 rounded text-sm">CodeBackgroundProvider</code> in 
+                <code className="font-code bg-muted px-1.5 py-0.5 rounded text-sm">src/app/layout.tsx</code> is responsible for fetching the current page's HTML source 
+                and making it available to the <code className="font-code bg-muted px-1.5 py-0.5 rounded text-sm">CodeBackground</code> component.
+              </li>
+            </ul>
+             <p className="mt-3">
+              This setup creates a layered effect where the fixed, animated code is always in the background, and translucent UI elements float above it.
+            </p>
           </div>
         </div>
       </GlassCard>
