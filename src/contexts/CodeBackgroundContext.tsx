@@ -28,9 +28,9 @@ export const CodeBackgroundProvider = ({ children }: { children: ReactNode }) =>
       const timer = setTimeout(() => {
         try {
           const html = document.documentElement.outerHTML;
-          // Basic formatting: indent lines for readability
-          const formattedHtml = html.split('\n').map(line => line.trimStart()).join('\n');
-          setSourceCode(formattedHtml);
+          // Preserve browser's default formatting by not aggressively trimming lines.
+          // The browser's outerHTML often includes some level of indentation.
+          setSourceCode(html);
         } catch (error) {
           console.error("Failed to get document source:", error);
           setSourceCode("Error fetching source code.");
